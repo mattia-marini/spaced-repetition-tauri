@@ -1,0 +1,17 @@
+.dropzone {
+  flex-grow: 1;
+  margin: 2em;
+  border: 0.7pt dashed gray;
+  /* stroke-dasharray: 10 5; */
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-width 0.3s ease;
+  transition: background-color 0.3s ease;
+}
+
+.dropzone.dragover {
+  /* border: 1px dashed gray !important; */
+  background-color: #202020;
+}
