@@ -1,2 +1,17 @@
-.main{
+.main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 3em;
+  overflow: hidden;
+}
+
+.file {
+  cursor: pointer;
+  text-align: center;
+}
+
+.markdownContainer {
+  flex-grow: 1;
+  overflow: scroll;
 }

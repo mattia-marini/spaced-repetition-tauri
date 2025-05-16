@@ -14,7 +14,7 @@ function Toolbar({ children }: React.PropsWithChildren) {
         {Array.isArray(children) ? children[0] : children}
       </div>
       <Separator />
-      <div style={{ flexGrow: 1, display: "flex" }}>
+      <div className={styles.body}>
         {Array.isArray(children) ? children[1] : null}
       </div>
     </div >
