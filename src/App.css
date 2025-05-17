@@ -1,4 +1,7 @@
-body, html { overscroll-behavior: none; }
+body,
+html {
+  overscroll-behavior: none;
+}
 
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
@@ -94,3 +97,5 @@ body {
   background-color: #202020;
   height: 0.7pt
 }
+
+

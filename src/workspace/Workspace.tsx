@@ -10,10 +10,11 @@ function Workspace({ workspacePath }: { workspacePath: string[] | null }) {
   let [markdown, setMarkdown] = useState<string>("");
 
   useEffect(() => {
-    invoke("read_markdown", { workspacePath: workspacePath![0] }).then((data) => {
-      setMarkdown(data as string);
-      // console.log(data)
-    })
+    if (workspacePath) {
+      invoke("read_markdown", { workspacePath: workspacePath![0] }).then((data) => {
+        setMarkdown(data as string);
+      })
+    }
   }, [workspacePath]);
 
   return (
@@ -29,8 +30,8 @@ function Workspace({ workspacePath }: { workspacePath: string[] | null }) {
             ))
             : "No workspace selected"
         }
-        <div className={styles.markdownContainer}>
-          <div style={{ width: "100%", height: "100%" }}>
+        <div className={`${styles.markdownContainer} ${styles.invisibleScrollbar}`}>
+          <div >
             <Markdown rehypePlugins={[rehypeRaw]} >{markdown}</Markdown>
           </div>
         </div>
