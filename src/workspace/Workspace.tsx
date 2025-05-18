@@ -58,31 +58,51 @@ function Workspace({ workspacePath }: { workspacePath: string[] | null }) {
     }
   }, [workspacePath]);
 
+
+  const handleNext = () => {
+    if (parsedFlashcards && Object.keys(parsedFlashcards).length > 0) {
+      setCurrCardIndex((prevIndex) => (prevIndex + 1) % Object.keys(parsedFlashcards).length);
+    }
+  }
+  const handlePrev = () => {
+    if (parsedFlashcards && Object.keys(parsedFlashcards).length > 0) {
+      setCurrCardIndex((prevIndex) => (prevIndex - 1 + Object.keys(parsedFlashcards).length) % Object.keys(parsedFlashcards).length);
+    }
+  }
+
   return (
     <Toolbar>
       <RouteList />
       <div className={styles.main}>
-        {
-          workspacePath ?
-            workspacePath.map((path, index) => (
-              <div key={index} className={styles.file}>
-                {path}
-              </div>
-            ))
-            : "No workspace selected"
-        }
+        <div className={styles.paths}>
+          {
+            workspacePath ?
+              workspacePath.map((path, index) => (
+                <div key={index} className={styles.file}>
+                  {path}
+                </div>
+              ))
+              : "No workspace selected"
+          }
+        </div>
         {error && <div className={styles.error}>{error}</div>}
-        <div className={`${styles.markdownContainer} ${styles.invisibleScrollbar}`}>
-          <div >
-            <Markdown rehypePlugins={[rehypeRaw]}>
-              {
-                parsedFlashcards
-                  ? (Object.keys(parsedFlashcards).length > 0
-                    ? parsedFlashcards[Object.keys(parsedFlashcards)[currCardIndex]].from_markdown.front
-                    : '# Empty deck!')
-                  : 'No deck loaded'
-              }
-            </Markdown>
+        <div className={styles.flashcardContainer}>
+          <div className={`${styles.markdownContainer} ${styles.invisibleScrollbar}`}>
+            <div >
+              <Markdown rehypePlugins={[rehypeRaw]}>
+                {
+                  parsedFlashcards
+                    ? (Object.keys(parsedFlashcards).length > 0
+                      ? parsedFlashcards[Object.keys(parsedFlashcards)[currCardIndex]].from_markdown.front
+                      : '# Empty deck!')
+                    : 'No deck loaded'
+                }
+              </Markdown>
+            </div>
+          </div>
+          <div className={styles.bottomButtons}>
+            <button onClick={handlePrev}> Prev</button>
+            <button onClick={handleNext}> Next</button>
           </div>
         </div>
       </div>

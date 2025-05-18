@@ -16,6 +16,30 @@
   overflow: scroll;
 }
 
+.flashcardContainer {
+  flex-grow: 1;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #202020;
+  border-radius: 10px;
+  padding: 1em;
+  margin-top: 1em;
+}
+
+.bottomButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.paths {
+  display: flex;
+  flex-direction: column;
+  border: 0.7px dashed gray;
+  border-radius: 10px;
+  padding: 1em;
+}
+
 
 /* .invisibleScrollbar::-webkit-scrollbar-track { */
 /*   /* background: none; */
