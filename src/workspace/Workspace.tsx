@@ -8,12 +8,33 @@ import { invoke } from "@tauri-apps/api/core";
 
 function Workspace({ workspacePath }: { workspacePath: string[] | null }) {
   let [markdown, setMarkdown] = useState<string>("");
+  let [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (workspacePath) {
-      invoke("read_markdown", { workspacePath: workspacePath![0] }).then((data) => {
-        setMarkdown(data as string);
-      })
+
+    if (workspacePath && workspacePath.length === 2) {
+      let jsonFile = null;
+      let markdownFile = null;
+
+      for (const path of workspacePath) {
+        if (path.endsWith('.json')) {
+          jsonFile = path;
+        } else if (path.endsWith('.md')) {
+          markdownFile = path;
+        }
+      }
+
+      if (jsonFile && markdownFile) {
+        invoke("read_markdown", { markdown: markdownFile, json: jsonFile }).then((data) => {
+          setMarkdown(data as string);
+        })
+      } else {
+        setError("Please select a markdown file and a json file");
+      }
+
+    }
+    else {
+      setError("Exactly two files must be selected");
     }
   }, [workspacePath]);
 
@@ -30,6 +51,7 @@ function Workspace({ workspacePath }: { workspacePath: string[] | null }) {
             ))
             : "No workspace selected"
         }
+        {error && <div className={styles.error}>{error}</div>}
         <div className={`${styles.markdownContainer} ${styles.invisibleScrollbar}`}>
           <div >
             <Markdown rehypePlugins={[rehypeRaw]} >{markdown}</Markdown>
